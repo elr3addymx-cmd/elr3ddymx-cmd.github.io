@@ -543,6 +543,129 @@ footer p{color:var(--gray);font-size:.83rem;margin-bottom:3px;}
         <div class="section-tag">Adquiere tu juego</div>
         <h2 class="section-title">¿Listo para Comprar?</h2>
       </div>
+
+      <!-- CHAT WIDGET -->
+      <div id="chatbox" style="max-width:540px;margin:0 auto 48px;background:rgba(15,20,32,0.97);border:1px solid rgba(204,17,17,.3);border-radius:16px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.5);">
+        <div style="background:linear-gradient(135deg,rgba(204,17,17,.2),rgba(26,111,196,.2));padding:16px 20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(255,255,255,.07);">
+          <div style="width:38px;height:38px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">🎮</div>
+          <div>
+            <div style="font-family:'Bangers',cursive;letter-spacing:2px;font-size:1rem;">El R3ddy Interactive Games</div>
+            <div style="font-size:.72rem;color:#4caf50;">● En línea — te respondemos rápido</div>
+          </div>
+        </div>
+        <div id="chat-messages" style="padding:20px;display:flex;flex-direction:column;gap:12px;min-height:200px;"></div>
+        <div id="chat-options" style="padding:0 20px 20px;display:flex;flex-direction:column;gap:8px;"></div>
+      </div>
+
+      <style>
+        .chat-bubble{padding:12px 16px;border-radius:12px;font-size:.9rem;line-height:1.5;max-width:85%;animation:fadeUp .3s ease both;}
+        .chat-bot{background:rgba(255,255,255,.07);border-radius:12px 12px 12px 0;align-self:flex-start;}
+        .chat-user{background:rgba(204,17,17,.2);border:1px solid rgba(204,17,17,.3);border-radius:12px 12px 0 12px;align-self:flex-end;text-align:right;}
+        .chat-opt{padding:11px 18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:8px;color:var(--white);font-size:.88rem;font-weight:700;cursor:pointer;text-align:left;transition:all .2s;}
+        .chat-opt:hover{background:rgba(204,17,17,.12);border-color:var(--red);}
+      </style>
+
+      <script>
+        var chatData={device:null,game:null,version:null};
+        var chatMsgs=document.getElementById('chat-messages');
+        var chatOpts=document.getElementById('chat-options');
+
+        function addBot(msg,delay){
+          delay=delay||0;
+          setTimeout(function(){
+            var b=document.createElement('div');
+            b.className='chat-bubble chat-bot';
+            b.innerHTML=msg;
+            chatMsgs.appendChild(b);
+            chatMsgs.scrollTop=chatMsgs.scrollHeight;
+          },delay);
+        }
+
+        function addUser(msg){
+          var b=document.createElement('div');
+          b.className='chat-bubble chat-user';
+          b.textContent=msg;
+          chatMsgs.appendChild(b);
+          chatMsgs.scrollTop=chatMsgs.scrollHeight;
+        }
+
+        function clearOpts(){chatOpts.innerHTML='';}
+
+        function showOpts(opts){
+          clearOpts();
+          opts.forEach(function(o){
+            var btn=document.createElement('button');
+            btn.className='chat-opt';
+            btn.textContent=o.label;
+            btn.onclick=function(){o.action();};
+            chatOpts.appendChild(btn);
+          });
+        }
+
+        function step1(){
+          addBot('👋 ¡Hola! Gracias por tu interés en nuestros juegos interactivos.<br>Para ayudarte mejor, necesito hacerte unas preguntas rápidas.<br><br><strong>¿Cuentas con computadora o celular?</strong>');
+          showOpts([
+            {label:'💻 Computadora',action:function(){addUser('Computadora');chatData.device='PC';clearOpts();step2();}},
+            {label:'📱 Celular',action:function(){addUser('Celular');chatData.device='Móvil';clearOpts();stepMobile();}}
+          ]);
+        }
+
+        function stepMobile(){
+          addBot('📱 Gracias por tu respuesta.<br><br>Lamentablemente, nuestros juegos <strong>no cuentan con soporte para dispositivos móviles</strong>, ya que utilizan aplicaciones externas como <strong>Stream to Earn</strong> para su funcionamiento, las cuales requieren una computadora.<br><br>Si en algún momento cuentas con una PC, con mucho gusto te atendemos. ¡Hasta pronto! 🎮',200);
+          clearOpts();
+        }
+
+        function step2(){
+          addBot('¡Perfecto! 💻<br><br><strong>¿Qué juego te interesa?</strong>',400);
+          setTimeout(function(){
+            showOpts([
+              {label:'🦑 Squid Stream',action:function(){addUser('Squid Stream');chatData.game='Squid Stream';clearOpts();step3();}},
+              {label:'🧟 Zombie Slug',action:function(){addUser('Zombie Slug');chatData.game='Zombie Slug';clearOpts();step3();}},
+              {label:'🌮 TacoManía',action:function(){addUser('TacoManía');chatData.game='TacoManía';clearOpts();step3();}},
+              {label:'✨ Juego Nuevo (personalizado)',action:function(){addUser('Juego Nuevo');chatData.game='Juego Nuevo';clearOpts();stepNuevo();}}
+            ]);
+          },800);
+        }
+
+        function step3(){
+          addBot('Excelente elección 🔥<br><br><strong>¿Prefieres la versión base o la versión personalizada?</strong><br><br>📦 <strong>Base</strong> — Personajes originales, entrega el mismo día<br>🎨 <strong>Personalizada</strong> — Con tu personaje, 1-3 días hábiles',400);
+          setTimeout(function(){
+            showOpts([
+              {label:'📦 Versión Base',action:function(){addUser('Versión Base');chatData.version='Base';clearOpts();stepFinal();}},
+              {label:'🎨 Versión Personalizada',action:function(){addUser('Versión Personalizada');chatData.version='Personalizada';clearOpts();stepFinal();}}
+            ]);
+          },800);
+        }
+
+        function stepNuevo(){
+          addBot('¡Genial, un juego nuevo! 🚀<br><br>En un momento uno de nuestros asesores se pondrá en contacto contigo para terminar de generar tu pedido a la medida.<br><br>⏰ <strong>Horarios de servicio:</strong> Lunes a sábado de 12:00 PM a 10:00 PM<br><br>Presiona el botón para enviarnos tu solicitud por WhatsApp 👇',400);
+          setTimeout(function(){
+            chatData.version='Juego Nuevo';
+            showOpts([{label:'📲 Enviar solicitud por WhatsApp',action:function(){sendWhatsApp();}}]);
+          },800);
+        }
+
+        function stepFinal(){
+          addBot('¡Perfecto, ya tenemos todo! 🎉<br><br>Presiona el botón para enviarnos tu pedido por WhatsApp y cerramos todo en minutos 👇',400);
+          setTimeout(function(){
+            showOpts([{label:'📲 Enviar pedido por WhatsApp',action:function(){sendWhatsApp();}}]);
+          },800);
+        }
+
+        function sendWhatsApp(){
+          var msg='';
+          if(chatData.game==='Juego Nuevo'){
+            msg='Hola, me interesa un *juego nuevo personalizado*.\n\nDispositivo: '+chatData.device+'\n\nQuedo en espera de que se pongan en contacto conmigo. ¡Gracias!';
+          } else {
+            msg='Hola, me interesa adquirir lo siguiente:\n\n🎮 *Juego:* '+chatData.game+'\n📦 *Versión:* '+chatData.version+'\n💻 *Dispositivo:* '+chatData.device+'\n\nQuedo en espera de su respuesta. ¡Gracias!';
+          }
+          var url='https://wa.me/5214441234567?text='+encodeURIComponent(msg);
+          window.open(url,'_blank');
+        }
+
+        // Iniciar chat cuando la página cargue
+        setTimeout(function(){step1();},600);
+      </script>
       <div class="buy-wrap">
         <div class="buy-info">
           <h3>Un juego que <span>paga solo</span> en tu primer live</h3>
