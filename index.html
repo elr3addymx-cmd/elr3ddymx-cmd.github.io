@@ -652,6 +652,10 @@ footer p{color:var(--gray);font-size:.83rem;margin-bottom:3px;}
           },800);
         }
 
+        function isInAppBrowser(){
+          var ua=navigator.userAgent||'';
+          return /FBAN|FBAV|Instagram|BytedanceWebview|musical_ly|TikTok/i.test(ua);
+        }
         function sendWhatsApp(){
           var msg='';
           if(chatData.game==='Juego Nuevo'){
@@ -660,7 +664,19 @@ footer p{color:var(--gray);font-size:.83rem;margin-bottom:3px;}
             msg='Hola, me interesa adquirir lo siguiente:\n\n🎮 *Juego:* '+chatData.game+'\n📦 *Versión:* '+chatData.version+'\n💻 *Dispositivo:* '+chatData.device+'\n\nQuedo en espera de su respuesta. ¡Gracias!';
           }
           var url='https://wa.me/524442057812?text='+encodeURIComponent(msg);
-          window.open(url,'_blank');
+          if(isInAppBrowser()){
+            clearOpts();
+            var aviso=document.createElement('div');
+            aviso.style.cssText='background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.3);border-radius:12px;padding:18px;text-align:center;margin-top:8px;';
+            aviso.innerHTML='<div style="font-size:1.4rem;margin-bottom:8px;">⚠️</div>'
+              +'<p style="font-family:Bangers,cursive;font-size:1rem;letter-spacing:1px;color:#ffd700;margin-bottom:8px;">ABRE EN TU NAVEGADOR</p>'
+              +'<p style="font-size:.83rem;color:#b0bec5;margin-bottom:14px;">TikTok bloquea WhatsApp. Copia este link y ábrelo en Safari o Chrome:</p>'
+              +'<div id="urlbox" style="background:rgba(0,0,0,.3);border-radius:8px;padding:10px;font-size:.78rem;color:#fff;word-break:break-all;margin-bottom:14px;">'+url+'</div>'
+              +'<button id="copybtn" onclick="this.textContent=\'✅ Copiado\';navigator.clipboard?navigator.clipboard.writeText(document.getElementById(\'urlbox\').textContent):prompt(\'Copia este link:\',document.getElementById(\'urlbox\').textContent)" style="padding:10px 20px;background:#CC1111;border:none;border-radius:8px;color:#fff;font-family:Bangers,cursive;font-size:.95rem;letter-spacing:2px;cursor:pointer;">COPIAR LINK</button>';
+            document.getElementById('chat-options').appendChild(aviso);
+          } else {
+            window.open(url,'_blank');
+          }
         }
 
         // Iniciar chat cuando la página cargue
