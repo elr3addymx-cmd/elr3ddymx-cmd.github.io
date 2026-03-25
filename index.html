@@ -25,7 +25,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;background:rgba(5,5,15,.97);
 .nav-btn::after{content:'';position:absolute;bottom:0;left:50%;right:50%;height:2px;background:var(--red);transition:all .2s;}
 .nav-btn:hover,.nav-btn.active{color:var(--white);}
 .nav-btn:hover::after,.nav-btn.active::after{left:6px;right:6px;}
-@media(max-width:700px){.nav-links{display:none;}nav{padding:0 16px;}}
+@media(max-width:700px){.nav-links{display:none;}nav{padding:0 16px;}.hamburger{display:flex!important;}}
 
 /* PÁGINAS */
 .page{display:none;min-height:100vh;padding-top:68px;position:relative;z-index:1;}
@@ -259,7 +259,21 @@ footer p{color:var(--gray);font-size:.83rem;margin-bottom:3px;}
     <button class="nav-btn" onclick="go('faq',this)">FAQ</button>
     <button class="nav-btn" onclick="go('comprar',this)" style="color:var(--red2)">Comprar</button>
   </div>
+  <button class="hamburger" id="hmb" onclick="document.getElementById('mobmenu').classList.toggle('open');this.classList.toggle('open')" style="display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:8px;">
+    <span style="display:block;width:26px;height:3px;background:#fff;border-radius:2px;transition:all .3s"></span>
+    <span style="display:block;width:26px;height:3px;background:#fff;border-radius:2px;transition:all .3s"></span>
+    <span style="display:block;width:26px;height:3px;background:#fff;border-radius:2px;transition:all .3s"></span>
+  </button>
 </nav>
+<div id="mobmenu" style="display:none;position:fixed;top:68px;left:0;right:0;z-index:299;background:rgba(5,5,15,.98);border-bottom:2px solid #CC1111;flex-direction:column;">
+  <button class="nav-btn" style="padding:16px 24px;text-align:left;font-size:1.1rem;border-bottom:1px solid rgba(255,255,255,.07)" onclick="go('home',null);document.getElementById('mobmenu').classList.remove('open');document.getElementById('hmb').classList.remove('open')">Inicio</button>
+  <button class="nav-btn" style="padding:16px 24px;text-align:left;font-size:1.1rem;border-bottom:1px solid rgba(255,255,255,.07)" onclick="go('juegos',null);document.getElementById('mobmenu').classList.remove('open');document.getElementById('hmb').classList.remove('open')">Juegos</button>
+  <button class="nav-btn" style="padding:16px 24px;text-align:left;font-size:1.1rem;border-bottom:1px solid rgba(255,255,255,.07)" onclick="go('noticias',null);document.getElementById('mobmenu').classList.remove('open');document.getElementById('hmb').classList.remove('open')">Noticias</button>
+  <button class="nav-btn" style="padding:16px 24px;text-align:left;font-size:1.1rem;border-bottom:1px solid rgba(255,255,255,.07)" onclick="go('encuesta',null);document.getElementById('mobmenu').classList.remove('open');document.getElementById('hmb').classList.remove('open')">Encuesta</button>
+  <button class="nav-btn" style="padding:16px 24px;text-align:left;font-size:1.1rem;border-bottom:1px solid rgba(255,255,255,.07)" onclick="go('faq',null);document.getElementById('mobmenu').classList.remove('open');document.getElementById('hmb').classList.remove('open')">FAQ</button>
+  <button class="nav-btn" style="padding:16px 24px;text-align:left;font-size:1.1rem;color:#ff2222" onclick="go('comprar',null);document.getElementById('mobmenu').classList.remove('open');document.getElementById('hmb').classList.remove('open')">Comprar</button>
+</div>
+<style>#mobmenu.open{display:flex!important;}</style>
 
 <!-- ══ HOME ══ -->
 <div id="page-home" class="page active">
