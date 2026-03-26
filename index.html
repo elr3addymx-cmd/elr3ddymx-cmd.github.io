@@ -891,84 +891,94 @@ function openGame(key){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-const SHEET_URL='https://script.google.com/macros/s/AKfycbw63vubtPFxM2lrxsu7vDMzgVGvVtxNYBAsNL7vOjZoxuG4Q52_UeGsz7XlXsSjvthz8A/exec';
+const SHEET_URL='https://script.google.com/macros/s/AKfycbxM-DRkdC3sMyYoLb1jnn2JfOV36Tfx4McZx71oAQlCEKLW6MeBnrq0q9TnS0Z2RFUBdg/exec';
 const opciones=['Supervivencia','Zoo Interactivo','Roblox','Juego de Terror'];
 let voted=false;
 
-async function getUserIP(){
-  try{
-    const r=await fetch('https://api.ipify.org?format=json');
-    const d=await r.json();
-    return d.ip;
-  }catch(e){return 'anon-'+Date.now();}
+// JSONP - funciona sin CORS desde cualquier URL
+function jsonp(url, callback){
+  const cbName = 'cb_'+Date.now();
+  window[cbName] = function(data){
+    delete window[cbName];
+    document.head.removeChild(script);
+    callback(data);
+  };
+  const script = document.createElement('script');
+  script.src = url + '&callback=' + cbName;
+  script.onerror = function(){
+    delete window[cbName];
+    document.head.removeChild(script);
+    callback(null);
+  };
+  document.head.appendChild(script);
 }
 
-async function loadVotes(){
+async function getUserIP(){
   try{
-    const r=await fetch(SHEET_URL+'?t='+Date.now());
-    const d=await r.json();
-    if(d.status==='ok') updateUI(d.totals,false);
-  }catch(e){}
+    const r = await fetch('https://api.ipify.org?format=json');
+    const d = await r.json();
+    return d.ip;
+  }catch(e){ return 'anon-'+Date.now(); }
 }
 
 function updateUI(totals, showRevealed){
-  const vals=opciones.map(o=>totals[o]||0);
-  const total=vals.reduce((a,b)=>a+b,0);
-  if(total===0)return;
-  const maxV=Math.max(...vals);
+  const vals = opciones.map(o => totals[o]||0);
+  const total = vals.reduce((a,b)=>a+b,0);
+  if(total===0) return;
+  const maxV = Math.max(...vals);
   vals.forEach((v,i)=>{
-    const pct=total>0?Math.round(v/total*100):0;
-    const fill=document.getElementById('pf'+i);
-    const pctEl=document.getElementById('pp'+i);
-    const btn=document.querySelectorAll('.poll-btn')[i];
-    if(fill) fill.style.width=pct+'%';
-    if(pctEl) pctEl.textContent=pct+'% ('+v+' votos)';
-    if(btn && v===maxV && maxV>0){
-      btn.style.borderColor='#ffd700';
-    }
+    const pct = Math.round(v/total*100);
+    const fill = document.getElementById('pf'+i);
+    const pctEl = document.getElementById('pp'+i);
+    const btn = document.querySelectorAll('.poll-btn')[i];
+    if(fill) fill.style.width = pct+'%';
+    if(pctEl) pctEl.textContent = pct+'% ('+v+' votos)';
+    if(btn && v===maxV && maxV>0) btn.style.borderColor='#ffd700';
   });
   if(showRevealed){
     document.getElementById('pollOpts').classList.add('poll-revealed');
     document.querySelectorAll('.poll-btn').forEach(b=>b.classList.add('voted'));
   }
-  document.getElementById('pollFoot').textContent=total+' streamers han votado 🎮';
+  document.getElementById('pollFoot').textContent = total+' streamers han votado 🎮';
+}
+
+function loadVotes(){
+  jsonp(SHEET_URL+'?action=get', function(data){
+    if(data && data.status==='ok') updateUI(data.totals, voted);
+  });
 }
 
 async function vote(idx){
-  if(voted)return;
+  if(voted) return;
   if(localStorage.getItem('r3ddy_voted')){
-    document.getElementById('pollFoot').textContent='⚠️ Ya votaste antes. ¡Gracias!';
     voted=true;
-    await loadVotes();
+    document.getElementById('pollFoot').textContent='⚠️ Ya votaste antes. ¡Gracias!';
+    loadVotes();
     document.getElementById('pollOpts').classList.add('poll-revealed');
     document.querySelectorAll('.poll-btn').forEach(b=>b.classList.add('voted'));
     return;
   }
   voted=true;
-  localStorage.setItem('r3ddy_voted',opciones[idx]);
+  localStorage.setItem('r3ddy_voted', opciones[idx]);
   document.getElementById('pollFoot').textContent='⏳ Registrando tu voto...';
 
-  try{
-    const ip=await getUserIP();
-    // Use no-cors iframe trick to avoid CORS
-    const url=SHEET_URL+'?voto='+encodeURIComponent(opciones[idx])+'&ip='+encodeURIComponent(ip)+'&t='+Date.now();
-    // Send via hidden iframe (bypasses CORS)
-    let iframe=document.createElement('iframe');
-    iframe.style.display='none';
-    iframe.src=url;
-    document.body.appendChild(iframe);
-    setTimeout(()=>document.body.removeChild(iframe),5000);
-  }catch(e){}
-
-  document.getElementById('pollFoot').textContent='✅ ¡Voto registrado! Cargando resultados...';
+  const ip = await getUserIP();
+  const url = SHEET_URL+'?action=vote&voto='+encodeURIComponent(opciones[idx])+'&ip='+encodeURIComponent(ip);
   
-  // Wait 3 seconds then load real results from sheet
-  setTimeout(async()=>{
-    await loadVotes();
+  jsonp(url, function(data){
     document.getElementById('pollOpts').classList.add('poll-revealed');
     document.querySelectorAll('.poll-btn').forEach(b=>b.classList.add('voted'));
-    document.getElementById('pollFoot').textContent='¡Gracias por votar! 🎮';
-  },3000);
+    if(data && data.status==='ok'){
+      updateUI(data.totals, true);
+      const total = Object.values(data.totals).reduce((a,b)=>a+b,0);
+      document.getElementById('pollFoot').textContent = total+' streamers han votado — ¡Gracias! 🎮';
+    } else if(data && data.status==='duplicate'){
+      document.getElementById('pollFoot').textContent='⚠️ Ya se registró un voto desde tu red.';
+    } else {
+      document.getElementById('pollFoot').textContent='✅ ¡Voto registrado! Gracias 🎮';
+      setTimeout(loadVotes, 2000);
+    }
+  });
 }
 
 function tfaq(el){
