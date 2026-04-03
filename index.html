@@ -34,7 +34,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;background:rgba(5,5,15,.97);
 #page-home.active{display:flex;}
 
 /* HOME */
-.hero{width:100%;min-height:calc(100vh - 68px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 20px 40px;}
+.hero{width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 20px 40px;}
 .hero-logo{width:min(400px,85vw);animation:popIn .7s cubic-bezier(.175,.885,.32,1.275) both;filter:drop-shadow(0 8px 40px rgba(204,17,17,.5));}
 .hero-sub{font-family:'Bangers',cursive;font-size:clamp(1rem,2.8vw,1.5rem);letter-spacing:6px;color:var(--blue2);margin-top:14px;text-transform:uppercase;animation:fadeUp .6s .3s ease both;}
 .hero-desc{max-width:560px;color:var(--gray);font-size:.98rem;line-height:1.75;margin-top:14px;animation:fadeUp .6s .35s ease both;}
@@ -299,25 +299,8 @@ footer p{color:var(--gray);font-size:.83rem;margin-bottom:3px;}
 
 <!-- ══ HOME ══ -->
 <div id="page-home" class="page active">
-  <div class="hero">
-    <img src="logo.png" alt="El R3ddy Interactive Games" class="hero-logo">
-    <p class="hero-sub">Juegos Interactivos para Streamers</p>
-    <p class="hero-desc">Haz que tu comunidad sea parte del juego. Tus espectadores participan en tiempo real — comentarios, likes y regalos controlan todo.</p>
-    <div class="hero-btns">
-      <button class="btn-red" onclick="go('juegos',null)">VER JUEGOS</button>
-      <button class="btn-outline" onclick="go('comprar',null)">COMPRAR AHORA</button>
-    </div>
-    <div class="promo-banner">
-      <span class="promo-emoji">🔥</span>
-      <div>
-        <div class="promo-text">PROMO — 2 JUEGOS POR $35 USD</div>
-        <div class="promo-sub">Elige cualquier 2 versiones base · Oferta por tiempo limitado</div>
-      </div>
-      <button class="btn-gold" onclick="go('comprar',null)">¡QUIERO LA PROMO!</button>
-    </div>
-  </div>
   <!-- CARRUSEL NOTICIAS -->
-  <div class="news-carousel-wrap">
+  <div class="news-carousel-wrap" style="margin-top:12px;">
     <div class="news-carousel-header">
       <div>
         <div class="section-tag" style="margin-bottom:6px;">Lo Último</div>
@@ -334,44 +317,54 @@ footer p{color:var(--gray);font-size:.83rem;margin-bottom:3px;}
     <div class="carousel-track-outer">
       <div class="carousel-track" id="carouselTrack">
         <div class="carousel-slide" onclick="go('noticias',null)">
-          <img src="1.png" alt="Cosmic Clash Finals">
+          <img src="1.png" alt="R3D vs Blue">
           <div class="carousel-overlay">
             <div class="carousel-badge">🚀 Próximamente</div>
-            <div class="carousel-slide-title">Un nuevo juego interactivo está próximo a llegar</div>
-            <div class="carousel-slide-sub">Cosmic Clash Finals — Azul vs Rojo. ¡Prepárate! →</div>
+            <div class="carousel-slide-title">Nuevo juego interactivo en camino — R3D vs Blue</div>
+            <div class="carousel-slide-sub">La batalla definitiva entre dos equipos. ¡Prepárate! →</div>
           </div>
         </div>
         <div class="carousel-slide" onclick="go('noticias',null)">
-          <img src="2.png" alt="Personaje BLU3">
+          <img src="2.png" alt="R3D vs Blue">
           <div class="carousel-overlay">
             <div class="carousel-badge">🎮 Nuevo Juego</div>
-            <div class="carousel-slide-title">BLU3 — El nuevo personaje ya está listo</div>
-            <div class="carousel-slide-sub">El competidor azul entra en acción. ¡Conoce al personaje! →</div>
+            <div class="carousel-slide-title">Nuevo juego interactivo en camino — R3D vs Blue</div>
+            <div class="carousel-slide-sub">Dos equipos, una sola victoria. ¡Elige tu bando! →</div>
           </div>
         </div>
         <div class="carousel-slide" onclick="go('noticias',null)">
-          <img src="3.png" alt="Personaje RED">
+          <img src="3.png" alt="R3ddy's Survivor Rumble">
           <div class="carousel-overlay">
-            <div class="carousel-badge">🎮 Nuevo Juego</div>
-            <div class="carousel-slide-title">R3D — El rival llega con todo</div>
-            <div class="carousel-slide-sub">El equipo rojo no se rinde. Conoce al rival →</div>
+            <div class="carousel-badge">🔥 Nuevo Juego</div>
+            <div class="carousel-slide-title">Nuevo juego interactivo: R3ddy's Survivor Rumble</div>
+            <div class="carousel-slide-sub">Sobrevive, compite y demuestra quién manda en el stream →</div>
           </div>
         </div>
         <div class="carousel-slide" onclick="go('noticias',null)">
-          <img src="5.png" alt="Trivia Interactiva">
+          <img src="5.png" alt="R3ddy's Survivor Rumble">
           <div class="carousel-overlay">
-            <div class="carousel-badge">⚡ Actualización</div>
-            <div class="carousel-slide-title">Trivia interactiva — Tu chat responde en vivo</div>
-            <div class="carousel-slide-sub">Mecánica de preguntas en tiempo real para tus viewers →</div>
-          </div>
-        <div class="carousel-slide" onclick="go('noticias',null)">
-          <img src="6.png" alt="Novedades">
-          <div class="carousel-overlay">
-            <div class="carousel-badge">🔥 Novedades</div>
-            <div class="carousel-slide-title">¡Más sorpresas en camino!</div>
-            <div class="carousel-slide-sub">Mantente al tanto de las últimas novedades →</div>
+            <div class="carousel-badge">⚡ Nuevo Juego</div>
+            <div class="carousel-slide-title">Nuevo juego interactivo: R3ddy's Survivor Rumble</div>
+            <div class="carousel-slide-sub">Tu chat decide quién sobrevive. ¡La acción en vivo! →</div>
           </div>
         </div>
+        <div class="carousel-slide" onclick="go('noticias',null)">
+          <img src="6.png" alt="R3ddy's Survivor Rumble">
+          <div class="carousel-overlay">
+            <div class="carousel-badge">🎮 Próximamente</div>
+            <div class="carousel-slide-title">Nuevo juego interactivo: R3ddy's Survivor Rumble</div>
+            <div class="carousel-slide-sub">Nuevas mecánicas, nuevos desafíos. ¡Muy pronto! →</div>
+          </div>
+        </div>
+        <div class="carousel-slide">
+          <div style="width:100%;height:340px;position:relative;background:#000;border-radius:14px;overflow:hidden;">
+            <iframe src="https://www.youtube.com/embed/AhVSnv0tL5I" style="width:100%;height:100%;border:none;position:absolute;inset:0;" allowfullscreen></iframe>
+          </div>
+          <div class="carousel-overlay">
+            <div class="carousel-badge">🎬 Gameplay</div>
+            <div class="carousel-slide-title">Squid Stream — Mira el gameplay en acción</div>
+            <div class="carousel-slide-sub">El juego más vendido de El R3ddy Interactive Games →</div>
+          </div>
         </div>
       </div>
     </div>
@@ -381,6 +374,24 @@ footer p{color:var(--gray);font-size:.83rem;margin-bottom:3px;}
       <button class="carousel-dot" onclick="carouselGo(2)"></button>
       <button class="carousel-dot" onclick="carouselGo(3)"></button>
       <button class="carousel-dot" onclick="carouselGo(4)"></button>
+      <button class="carousel-dot" onclick="carouselGo(5)"></button>
+    </div>
+  </div>
+  <div class="hero">
+    <img src="logo.png" alt="El R3ddy Interactive Games" class="hero-logo">
+    <p class="hero-sub">Juegos Interactivos para Streamers</p>
+    <p class="hero-desc">Haz que tu comunidad sea parte del juego. Tus espectadores participan en tiempo real — comentarios, likes y regalos controlan todo.</p>
+    <div class="hero-btns">
+      <button class="btn-red" onclick="go('juegos',null)">VER JUEGOS</button>
+      <button class="btn-outline" onclick="go('comprar',null)">COMPRAR AHORA</button>
+    </div>
+    <div class="promo-banner">
+      <span class="promo-emoji">🔥</span>
+      <div>
+        <div class="promo-text">PROMO — 2 JUEGOS POR $35 USD</div>
+        <div class="promo-sub">Elige cualquier 2 versiones base · Oferta por tiempo limitado</div>
+      </div>
+      <button class="btn-gold" onclick="go('comprar',null)">¡QUIERO LA PROMO!</button>
     </div>
   </div>
 
@@ -910,7 +921,7 @@ const games={
       {icon:'🎛️',title:'Controles del Anfitrión',desc:'Tú controlas el ritmo, inicias/terminas rondas y anuncias ganadores'},
       {icon:'📺',title:'Compatible con Stream to Earn',desc:'Funciona con la versión gratuita o de paga según tu configuración'},
     ],
-    videoId:'',
+    videoId:'AhVSnv0tL5I',
     base:20,custom:40,
   },
   zombie:{
