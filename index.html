@@ -34,7 +34,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;background:rgba(5,5,15,.97);
 #page-home.active{display:flex;}
 
 /* HOME */
-.hero{width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 20px 40px;}
+.hero{width:100%;min-height:calc(100vh - 68px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 20px 40px;}
 .hero-logo{width:min(400px,85vw);animation:popIn .7s cubic-bezier(.175,.885,.32,1.275) both;filter:drop-shadow(0 8px 40px rgba(204,17,17,.5));}
 .hero-sub{font-family:'Bangers',cursive;font-size:clamp(1rem,2.8vw,1.5rem);letter-spacing:6px;color:var(--blue2);margin-top:14px;text-transform:uppercase;animation:fadeUp .6s .3s ease both;}
 .hero-desc{max-width:560px;color:var(--gray);font-size:.98rem;line-height:1.75;margin-top:14px;animation:fadeUp .6s .35s ease both;}
@@ -261,6 +261,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;background:rgba(5,5,15,.97);
 
 /* FOOTER */
 footer{background:rgba(3,3,8,.98);border-top:1px solid rgba(204,17,17,.18);padding:40px 20px 24px;text-align:center;position:relative;z-index:1;}
+
+/* BOTÓN FLOTANTE WHATSAPP */
+.wa-float{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;align-items:center;gap:10px;background:#25d366;color:#fff;font-family:'Bangers',cursive;font-size:1rem;letter-spacing:2px;padding:13px 20px 13px 16px;border-radius:50px;box-shadow:0 6px 28px rgba(37,211,102,.45);text-decoration:none;transition:all .25s;animation:waPulse 2.5s ease-in-out infinite;}
+.wa-float:hover{background:#1ebe5d;transform:translateY(-3px);box-shadow:0 10px 36px rgba(37,211,102,.6);}
+.wa-float svg{width:26px;height:26px;flex-shrink:0;}
+@keyframes waPulse{0%,100%{box-shadow:0 6px 28px rgba(37,211,102,.45);}50%{box-shadow:0 6px 38px rgba(37,211,102,.75),0 0 0 8px rgba(37,211,102,.12);}}
 .footer-logo{font-family:'Bangers',cursive;font-size:1.2rem;letter-spacing:3px;margin-bottom:5px;}
 .footer-logo span{color:var(--red2);}
 footer p{color:var(--gray);font-size:.83rem;margin-bottom:3px;}
@@ -278,7 +284,6 @@ footer p{color:var(--gray);font-size:.83rem;margin-bottom:3px;}
     <button class="nav-btn active" onclick="go('home',this)">Inicio</button>
     <button class="nav-btn" onclick="go('juegos',this)">Juegos</button>
     <button class="nav-btn" onclick="go('noticias',this)">Noticias</button>
-    <button class="nav-btn" onclick="go('encuesta',this)">Encuesta</button>
     <button class="nav-btn" onclick="go('faq',this)">FAQ</button>
     <button class="nav-btn" onclick="go('comprar',this)" style="color:var(--red2)">Comprar</button>
   </div>
@@ -292,7 +297,6 @@ footer p{color:var(--gray);font-size:.83rem;margin-bottom:3px;}
   <button onclick="go('home',null);document.getElementById('mobmenu').style.display='none'" style="padding:16px 24px;background:none;border:none;border-bottom:1px solid rgba(255,255,255,.07);color:#b0bec5;font-family:'Bangers',cursive;font-size:1.1rem;letter-spacing:2px;text-align:left;cursor:pointer">Inicio</button>
   <button onclick="go('juegos',null);document.getElementById('mobmenu').style.display='none'" style="padding:16px 24px;background:none;border:none;border-bottom:1px solid rgba(255,255,255,.07);color:#b0bec5;font-family:'Bangers',cursive;font-size:1.1rem;letter-spacing:2px;text-align:left;cursor:pointer">Juegos</button>
   <button onclick="go('noticias',null);document.getElementById('mobmenu').style.display='none'" style="padding:16px 24px;background:none;border:none;border-bottom:1px solid rgba(255,255,255,.07);color:#b0bec5;font-family:'Bangers',cursive;font-size:1.1rem;letter-spacing:2px;text-align:left;cursor:pointer">Noticias</button>
-  <button onclick="go('encuesta',null);document.getElementById('mobmenu').style.display='none'" style="padding:16px 24px;background:none;border:none;border-bottom:1px solid rgba(255,255,255,.07);color:#b0bec5;font-family:'Bangers',cursive;font-size:1.1rem;letter-spacing:2px;text-align:left;cursor:pointer">Encuesta</button>
   <button onclick="go('faq',null);document.getElementById('mobmenu').style.display='none'" style="padding:16px 24px;background:none;border:none;border-bottom:1px solid rgba(255,255,255,.07);color:#b0bec5;font-family:'Bangers',cursive;font-size:1.1rem;letter-spacing:2px;text-align:left;cursor:pointer">FAQ</button>
   <button onclick="go('comprar',null);document.getElementById('mobmenu').style.display='none'" style="padding:16px 24px;background:none;border:none;color:#ff2222;font-family:'Bangers',cursive;font-size:1.1rem;letter-spacing:2px;text-align:left;cursor:pointer">Comprar</button>
 </div>
@@ -300,7 +304,7 @@ footer p{color:var(--gray);font-size:.83rem;margin-bottom:3px;}
 <!-- ══ HOME ══ -->
 <div id="page-home" class="page active">
   <!-- CARRUSEL NOTICIAS -->
-  <div class="news-carousel-wrap" style="margin-top:12px;">
+  <div class="news-carousel-wrap" style="padding-top:20px;">
     <div class="news-carousel-header">
       <div>
         <div class="section-tag" style="margin-bottom:6px;">Lo Último</div>
@@ -316,54 +320,36 @@ footer p{color:var(--gray);font-size:.83rem;margin-bottom:3px;}
     </div>
     <div class="carousel-track-outer">
       <div class="carousel-track" id="carouselTrack">
-        <div class="carousel-slide" onclick="go('noticias',null)">
-          <img src="1.png" alt="R3D vs Blue">
+        <div class="carousel-slide" onclick="openGame('survivor')">
+          <img src="Survivor_Rumble.png" alt="Survivor Rumble" style="object-fit:contain;background:linear-gradient(135deg,#0a0f1a,#1a0505);">
           <div class="carousel-overlay">
-            <div class="carousel-badge">🚀 Próximamente</div>
-            <div class="carousel-slide-title">Nuevo juego interactivo en camino — R3D vs Blue</div>
-            <div class="carousel-slide-sub">La batalla definitiva entre dos equipos. ¡Prepárate! →</div>
+            <div class="carousel-badge">🔥 ¡Ya Disponible!</div>
+            <div class="carousel-slide-title">Survivor Rumble — ¡Ya disponible!</div>
+            <div class="carousel-slide-sub">El reality show interactivo más épico del catálogo. ¡Cómpralo hoy! →</div>
           </div>
         </div>
-        <div class="carousel-slide" onclick="go('noticias',null)">
-          <img src="2.png" alt="R3D vs Blue">
+        <div class="carousel-slide" onclick="openGame('survivor')">
+          <img src="Survivor_Rumble.png" alt="¿Qué equipo ganará?" style="object-fit:contain;background:linear-gradient(135deg,#0d0020,#200000);">
           <div class="carousel-overlay">
-            <div class="carousel-badge">🎮 Nuevo Juego</div>
-            <div class="carousel-slide-title">Nuevo juego interactivo en camino — R3D vs Blue</div>
-            <div class="carousel-slide-sub">Dos equipos, una sola victoria. ¡Elige tu bando! →</div>
+            <div class="carousel-badge" style="background:rgba(204,17,17,.4);border-color:rgba(204,17,17,.6);color:#fff;">🔴🔵 Equipos</div>
+            <div class="carousel-slide-title">¿Qué equipo ganará? R3D o BLU3</div>
+            <div class="carousel-slide-sub">Dos equipos, una sola victoria. Tu chat elige al campeón →</div>
           </div>
         </div>
-        <div class="carousel-slide" onclick="go('noticias',null)">
-          <img src="3.png" alt="R3ddy's Survivor Rumble">
+        <div class="carousel-slide" onclick="go('comprar',null)">
+          <img src="Survivor_Rumble.png" alt="3 competencias" style="object-fit:contain;background:linear-gradient(135deg,#0a1500,#150a00);">
           <div class="carousel-overlay">
-            <div class="carousel-badge">🔥 Nuevo Juego</div>
-            <div class="carousel-slide-title">Nuevo juego interactivo: R3ddy's Survivor Rumble</div>
-            <div class="carousel-slide-sub">Sobrevive, compite y demuestra quién manda en el stream →</div>
+            <div class="carousel-badge" style="background:rgba(255,165,0,.3);border-color:rgba(255,165,0,.5);color:#ffaa00;">🏆 Formato</div>
+            <div class="carousel-slide-title">3 Competencias · 2 Eliminaciones · 1 Equipo Ganador 🔥🎮</div>
+            <div class="carousel-slide-sub">El show más completo para tu TikTok Live →</div>
           </div>
         </div>
-        <div class="carousel-slide" onclick="go('noticias',null)">
-          <img src="5.png" alt="R3ddy's Survivor Rumble">
+        <div class="carousel-slide" onclick="go('comprar',null)">
+          <img src="5.png" alt="Desarrollamos tu videojuego" style="object-fit:cover;background:linear-gradient(135deg,#08080f,#0a0a1a);">
           <div class="carousel-overlay">
-            <div class="carousel-badge">⚡ Nuevo Juego</div>
-            <div class="carousel-slide-title">Nuevo juego interactivo: R3ddy's Survivor Rumble</div>
-            <div class="carousel-slide-sub">Tu chat decide quién sobrevive. ¡La acción en vivo! →</div>
-          </div>
-        </div>
-        <div class="carousel-slide" onclick="go('noticias',null)">
-          <img src="6.png" alt="R3ddy's Survivor Rumble">
-          <div class="carousel-overlay">
-            <div class="carousel-badge">🎮 Próximamente</div>
-            <div class="carousel-slide-title">Nuevo juego interactivo: R3ddy's Survivor Rumble</div>
-            <div class="carousel-slide-sub">Nuevas mecánicas, nuevos desafíos. ¡Muy pronto! →</div>
-          </div>
-        </div>
-        <div class="carousel-slide">
-          <div style="width:100%;height:340px;position:relative;background:#000;border-radius:14px;overflow:hidden;">
-            <iframe src="https://www.youtube.com/embed/AhVSnv0tL5I" style="width:100%;height:100%;border:none;position:absolute;inset:0;" allowfullscreen></iframe>
-          </div>
-          <div class="carousel-overlay">
-            <div class="carousel-badge">🎬 Gameplay</div>
-            <div class="carousel-slide-title">Squid Stream — Mira el gameplay en acción</div>
-            <div class="carousel-slide-sub">El juego más vendido de El R3ddy Interactive Games →</div>
+            <div class="carousel-badge" style="background:rgba(33,150,243,.3);border-color:rgba(33,150,243,.5);color:#90caf9;">💡 Desarrollo a la Medida</div>
+            <div class="carousel-slide-title">DESARROLLAMOS TU VIDEOJUEGO O TU APLICACIÓN INTERACTIVA PARA TIKTOK. ¡CONTÁCTANOS! 🎮🔥</div>
+            <div class="carousel-slide-sub">Cuéntanos tu idea — la hacemos realidad →</div>
           </div>
         </div>
       </div>
@@ -373,10 +359,9 @@ footer p{color:var(--gray);font-size:.83rem;margin-bottom:3px;}
       <button class="carousel-dot" onclick="carouselGo(1)"></button>
       <button class="carousel-dot" onclick="carouselGo(2)"></button>
       <button class="carousel-dot" onclick="carouselGo(3)"></button>
-      <button class="carousel-dot" onclick="carouselGo(4)"></button>
-      <button class="carousel-dot" onclick="carouselGo(5)"></button>
     </div>
   </div>
+
   <div class="hero">
     <img src="logo.png" alt="El R3ddy Interactive Games" class="hero-logo">
     <p class="hero-sub">Juegos Interactivos para Streamers</p>
@@ -406,6 +391,24 @@ footer p{color:var(--gray);font-size:.83rem;margin-bottom:3px;}
         <h2 class="section-title">Nuestros Juegos</h2>
       </div>
       <div class="games-grid">
+
+        <!-- Survivor Rumble -->
+        <div class="game-card" onclick="openGame('survivor')">
+          <span class="game-badge new">🏝️ NUEVO</span>
+          <div class="game-thumb" style="background:linear-gradient(135deg,#0a0f1a,#1a0a0a);">
+            <img src="Survivor_Rumble.png" alt="Survivor Rumble">
+          </div>
+          <div class="game-body">
+            <h3 class="game-title">Survivor Rumble</h3>
+            <p class="game-desc">Reality show interactivo. Equipo Rojo vs Equipo Azul. 5 minijuegos, eliminaciones en vivo y un solo campeón. Tu chat decide todo.</p>
+            <div class="game-tags"><span class="tag">Equipos</span><span class="tag">Supervivencia</span><span class="tag">Multijuego</span></div>
+            <div class="pricing-row">
+              <div class="price-box" onclick="event.stopPropagation();go('comprar',null)"><p class="price-type">Base</p><p class="price-amount">$20</p><p class="price-small">USD</p><span class="price-cta">Comprar →</span></div>
+              <div class="price-box featured" onclick="event.stopPropagation();go('comprar',null)"><p class="price-type">Personalizado</p><p class="price-amount">$40</p><p class="price-small">USD</p><span class="price-cta">Comprar →</span></div>
+            </div>
+            <button class="view-more-btn">📖 VER DETALLES COMPLETOS + VIDEO</button>
+          </div>
+        </div>
 
         <!-- Squid Stream -->
         <div class="game-card" onclick="openGame('squid')">
@@ -471,6 +474,7 @@ footer p{color:var(--gray);font-size:.83rem;margin-bottom:3px;}
           <span class="promo-game-tag">🦑 Squid Stream</span>
           <span class="promo-game-tag">🧟 Zombie Slug</span>
           <span class="promo-game-tag">🌮 TacoManía</span>
+          <span class="promo-game-tag">🏝️ Survivor Rumble</span>
         </div>
         <div><span class="promo-price">$35 USD</span><span class="promo-orig">$40 USD</span></div>
         <br>
@@ -522,6 +526,8 @@ footer p{color:var(--gray);font-size:.83rem;margin-bottom:3px;}
       </div>
       <div class="news-grid">
 
+        <div class="news-card"><div class="ns ns-r"></div><div class="nb"><div class="nc cr">🏝️ Lanzamiento</div><h3 class="ntitle">Survivor Rumble — ¡Ya disponible!</h3><p class="ntext">El juego interactivo donde el equipo R3D y el equipo BLU3 se enfrentan en una competencia para demostrar quién es el mejor. ¡Ya está disponible! 🔥🎮</p><p class="ndate">📅 Abril 2025</p></div></div>
+
         <div class="news-card"><div class="ns ns-r"></div><div class="nb"><div class="nc cr">🎮 Nuevo Juego</div><h3 class="ntitle">Supervivencia — Competencia por Equipos en Desarrollo</h3><p class="ntext">Equipo Azul vs Equipo Rojo. 5 desafíos, un solo ganador. El próximo gran evento de streaming interactivo ya está en camino.</p><p class="ndate">📅 Marzo 2025</p></div></div>
 
         <div class="news-card"><div class="ns ns-o"></div><div class="nb"><div class="nc co">🏆 Hito</div><h3 class="ntitle">Primeras ventas completadas — ¡Gracias comunidad!</h3><p class="ntext">El catálogo de El R3ddy Interactive Games ya está en manos de streamers reales. El mercado habló y los juegos están volando.</p><p class="ndate">📅 Marzo 2025</p></div></div>
@@ -539,34 +545,12 @@ footer p{color:var(--gray);font-size:.83rem;margin-bottom:3px;}
         <h2 class="section-title">Próximos Juegos</h2>
       </div>
       <div class="upcoming-grid">
-        <div class="uc"><span class="ue">🏝️</span><h3 class="ut">Supervivencia</h3><p class="ud">Reality show interactivo. Equipo Azul vs Equipo Rojo. 5 desafíos. El chat elige al ganador.</p><span class="sb s-dev">En Desarrollo</span></div>
+        <div class="uc"><span class="ue">🏝️</span><h3 class="ut">Survivor Rumble</h3><p class="ud">Reality show interactivo. Equipo Azul vs Equipo Rojo. 5 minijuegos. El chat elige al ganador.</p><span class="sb" style="background:rgba(0,170,68,.15);color:#00cc55;border:1px solid rgba(0,170,68,.4);">✅ Disponible</span></div>
         <div class="uc"><span class="ue">🦁</span><h3 class="ut">Zoo Interactivo</h3><p class="ud">Construye y administra un zoológico con tu comunidad. Gifts = animales raros y mejoras especiales.</p><span class="sb s-soon">Próximamente</span></div>
         <div class="uc"><span class="ue">🎮</span><h3 class="ut">Roblox Games</h3><p class="ud">Juegos interactivos diseñados para streamers de Roblox. ¡Nueva audiencia, nueva oportunidad!</p><span class="sb s-soon">En Proceso</span></div>
-        <div class="uc"><span class="ue">🎲</span><h3 class="ut">???</h3><p class="ud">Proyecto secreto en proceso. ¡Vota en la encuesta y ayúdanos a decidir qué sale primero!</p><span class="sb s-vote">En Votación</span></div>
+        <div class="uc"><span class="ue">🎲</span><h3 class="ut">???</h3><p class="ud">Proyecto secreto en proceso. ¡Síguenos en TikTok para ser el primero en enterarte!</p><span class="sb s-vote">En Desarrollo</span></div>
       </div>
 
-    </div>
-  </div>
-</div>
-
-<!-- ══ ENCUESTA ══ -->
-<div id="page-encuesta" class="page">
-  <div class="section">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-tag">Tu opinión importa</div>
-        <h2 class="section-title">¿Qué Juego Quieres?</h2>
-      </div>
-      <div class="poll-wrap">
-        <p class="poll-q">¿Cuál sería el próximo juego interactivo que más usarías en tu live?</p>
-        <div class="poll-options" id="pollOpts">
-          <button class="poll-btn" onclick="vote(0)"><div class="poll-fill" id="pf0"></div><span>🏝️</span><span>Supervivencia — Competencia por equipos</span><span class="poll-pct" id="pp0"></span><span id="pc0" style="font-size:.72rem;color:var(--gray);margin-left:4px;opacity:0;transition:opacity .3s;" class="poll-pct"></span></button>
-          <button class="poll-btn" onclick="vote(1)"><div class="poll-fill" id="pf1"></div><span>🦁</span><span>Zoo Interactivo — Cuida animales con tu chat</span><span class="poll-pct" id="pp1"></span><span id="pc1" style="font-size:.72rem;color:var(--gray);margin-left:4px;opacity:0;transition:opacity .3s;" class="poll-pct"></span></button>
-          <button class="poll-btn" onclick="vote(2)"><div class="poll-fill" id="pf2"></div><span>🎮</span><span>Juego Interactivo de Roblox</span><span class="poll-pct" id="pp2"></span></button>
-          <button class="poll-btn" onclick="vote(3)"><div class="poll-fill" id="pf3"></div><span>👻</span><span>Juego de Terror — Tu chat activa los sustos</span><span class="poll-pct" id="pp3"></span></button>
-        </div>
-        <p class="poll-footer" id="pollFoot">Dale click a tu favorito 👆</p>
-      </div>
     </div>
   </div>
 </div>
@@ -723,6 +707,7 @@ footer p{color:var(--gray);font-size:.83rem;margin-bottom:3px;}
               {label:'🦑 Squid Stream',action:function(){addUser('Squid Stream');chatData.game='Squid Stream';clearOpts();step3();}},
               {label:'🧟 Zombie Slug',action:function(){addUser('Zombie Slug');chatData.game='Zombie Slug';clearOpts();step3();}},
               {label:'🌮 TacoManía',action:function(){addUser('TacoManía');chatData.game='TacoManía';clearOpts();step3();}},
+              {label:'🏝️ Survivor Rumble',action:function(){addUser('Survivor Rumble');chatData.game='Survivor Rumble';clearOpts();step3();}},
               {label:'✨ Juego Nuevo (personalizado)',action:function(){addUser('Juego Nuevo');chatData.game='Juego Nuevo';clearOpts();stepNuevo();}}
             ]);
           },800);
@@ -755,7 +740,8 @@ footer p{color:var(--gray);font-size:.83rem;margin-bottom:3px;}
             var opts=[
               {label:'🦑 Squid Stream',action:function(){addUser('Squid Stream');chatData.game2='Squid Stream';clearOpts();stepVersion2();}},
               {label:'🧟 Zombie Slug',action:function(){addUser('Zombie Slug');chatData.game2='Zombie Slug';clearOpts();stepVersion2();}},
-              {label:'🌮 TacoManía',action:function(){addUser('TacoManía');chatData.game2='TacoManía';clearOpts();stepVersion2();}}
+              {label:'🌮 TacoManía',action:function(){addUser('TacoManía');chatData.game2='TacoManía';clearOpts();stepVersion2();}},
+              {label:'🏝️ Survivor Rumble',action:function(){addUser('Survivor Rumble');chatData.game2='Survivor Rumble';clearOpts();stepVersion2();}}
             ];
             // Remove the first game from options
             opts=opts.filter(function(o){return o.label.indexOf(g1)<0;});
@@ -850,7 +836,13 @@ footer p{color:var(--gray);font-size:.83rem;margin-bottom:3px;}
   </div>
 </div>
 
-<!-- FOOTER -->
+<!-- BOTÓN FLOTANTE WHATSAPP -->
+<a class="wa-float" href="https://wa.me/524442057812?text=Hola%2C%20me%20interesa%20saber%20m%C3%A1s%20sobre%20los%20juegos%20interactivos%20de%20El%20R3ddy%20Interactive%20Games%20%F0%9F%8E%AE" target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+  CONTÁCTANOS
+</a>
 
 <!-- FOOTER -->
 <footer>
@@ -921,7 +913,7 @@ const games={
       {icon:'🎛️',title:'Controles del Anfitrión',desc:'Tú controlas el ritmo, inicias/terminas rondas y anuncias ganadores'},
       {icon:'📺',title:'Compatible con Stream to Earn',desc:'Funciona con la versión gratuita o de paga según tu configuración'},
     ],
-    videoId:'AhVSnv0tL5I',
+    videoId:'',
     base:20,custom:40,
   },
   zombie:{
@@ -937,6 +929,23 @@ const games={
       {icon:'🎵',title:'Bosses Reactivos a la Música',desc:'Los patrones de ataque de los bosses sincronizan con la música'},
       {icon:'💰',title:'Sistema de Economía',desc:'Economía in-game que balancea mejoras y mantiene el juego estratégico'},
       {icon:'📺',title:'Compatible con Stream to Earn',desc:'Funciona con la versión gratuita o de paga según tu configuración'},
+    ],
+    videoId:'',
+    base:20,custom:40,
+  },
+  survivor:{
+    logo:'Survivor_Rumble.png',
+    title:'Survivor Rumble',
+    tagline:'Reality show interactivo — Equipo Rojo vs Equipo Azul',
+    tags:['Equipos','Supervivencia','Multijuego','Stream to Earn'],
+    desc:`Survivor Rumble convierte tu live en un reality show de competencia épico. Dos equipos — Rojo y Azul — se enfrentan en una serie de minijuegos interactivos donde el chat, los likes y los gifts determinan quién sobrevive y quién es eliminado.\n\nCada partida es un evento completo: los viewers se unen a sus equipos, participan en rondas de trivia, carreras, defensa de torres y más. Las eliminaciones las decide el propio chat mediante votos en tiempo real. Solo un equipo se corona campeón.\n\nCon 5 minijuegos distintos, un sistema de eliminación por votación y mecánicas de donación integradas, Survivor Rumble es la experiencia de streaming más completa e inmersiva del catálogo de El R3ddy.`,
+    features:[
+      {icon:'🏝️',title:'Reality Show Completo',desc:'Flujo de juego con lobby, minijuegos, eliminaciones y gran final'},
+      {icon:'🔴🔵',title:'Equipo Rojo vs Equipo Azul',desc:'Viewers se dividen en equipos y compiten por la victoria colectiva'},
+      {icon:'🎮',title:'5 Minijuegos Distintos',desc:'Carrera, trivia, tower defense y más — cada stream es diferente'},
+      {icon:'🗳️',title:'Eliminaciones por Votación',desc:'El chat vota quién se va — la comunidad tiene el poder'},
+      {icon:'🎁',title:'Integración Stream to Earn',desc:'Likes y gifts cargan habilidades, invocan unidades y cambian el rumbo'},
+      {icon:'🎛️',title:'Panel de Operador',desc:'Control total del anfitrión para manejar cada fase del show'},
     ],
     videoId:'',
     base:20,custom:40,
